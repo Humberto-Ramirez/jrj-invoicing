@@ -1,7 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 
-app = FastAPI(title="JRJ Invoicing API")
+app = FastAPI(
+    title="JRJ Invoicing API",
+    openapi_url="/app/v1/openapi.json"
+)
 
 
 @app.get("/")
