@@ -11,6 +11,12 @@ uvicorn = "^0.17.5"
 fastapi = "^0.75.0"
 loguru = "^0.6.0"
 requests = "^2.27.1"
+# db operations
+SQLAlchemy = "^1.4.32"
+# retries
+tenacity = "^8.0.1"
+# postgres dialect
+psycopg2-binary = "^2.9.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
