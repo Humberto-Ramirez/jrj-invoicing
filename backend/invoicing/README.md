@@ -7,6 +7,26 @@ FastApi project for JRJ Construction invoices.
 * [Python 3.9+](https://www.python.org)
 * [Poetry](https://python-poetry.org/) for Python package and dependency management.
 
+## Local Development
+
+By default, the dependencies are managed with [Poetry](https://python-poetry.org/), go there and install it.
+
+You can install all the dependencies with:
+
+```console
+poetry install
+```
+
+Then you can start a shell session with the new environment with:
+
+```console
+poetry shell
+```
+
+Next, open your editor at project root: `./`, so that you see an `./src/jrj_invoicing` directory with your code inside.
+That way, your editor will be able to find all the imports, etc. Make sure your editor uses the environment you just
+created with Poetry.
+
 ## Testing
 
 To test the project run:
