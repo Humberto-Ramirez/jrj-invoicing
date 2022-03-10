@@ -1,5 +1,7 @@
+from datetime import datetime
 from typing import Any
 
+from sqlalchemy import Column, DateTime
 from sqlalchemy.ext.declarative import as_declarative, declared_attr
 
 
@@ -12,3 +14,8 @@ class Base:
     @declared_attr
     def __tablename__(cls) -> str:
         return cls.__name__.lower()
+
+
+class Audit(object):
+    create_date = Column(DateTime, nullable=False, default=datetime.now())
+    last_modified = Column(DateTime, onupdate=datetime.now())
