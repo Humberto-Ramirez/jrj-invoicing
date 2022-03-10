@@ -7,7 +7,7 @@ from sqlalchemy import pool
 from alembic import context
 
 # JRJ Invoicing model's MetaData
-from jrj_invoicing.db.base import Base
+from jrj_invoicing.persistence.db.base import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

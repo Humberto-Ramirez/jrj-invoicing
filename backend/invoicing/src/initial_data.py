@@ -1,7 +1,7 @@
 import logging
 
-from jrj_invoicing.db.init_db import init_db
-from jrj_invoicing.db.session import SessionLocal
+from jrj_invoicing.persistence.db.init_db import init_db
+from jrj_invoicing.persistence.db.session import SessionLocal
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

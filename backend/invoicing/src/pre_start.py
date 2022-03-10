@@ -1,6 +1,6 @@
 import logging
 
-from jrj_invoicing.db.session import SessionLocal
+from jrj_invoicing.persistence.db.session import SessionLocal
 from tenacity import after_log, before_log, retry, stop_after_attempt, wait_fixed
 
 logging.basicConfig(level=logging.INFO)
