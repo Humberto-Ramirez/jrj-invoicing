@@ -1,10 +1,10 @@
 #! /usr/bin/env bash
 
 # Let the DB start
-python src/jrj_invoicing/pre_start.py
+python src/pre_start.py
 
 # Run migrations
 alembic upgrade head
 
 # Create initial data in DB
-python src/jrj_invoicing/initial_data.py
+python src/initial_data.py
