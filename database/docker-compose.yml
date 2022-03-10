@@ -16,7 +16,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     ports:
-      - "80:80"
+      - "5050:5050"
     networks:
       - default
     depends_on:
