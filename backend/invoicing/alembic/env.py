@@ -50,7 +50,6 @@ def run_migrations_offline():
     script output.
 
     """
-    # url = config.get_main_option("sqlalchemy.url")
     url = get_url()
     context.configure(
         url=url,
@@ -70,8 +69,6 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
-    # configuration = config.get_section(config.config_ini_section)
-    #     configuration["sqlalchemy.url"] = get_url()
     configuration = config.get_section(config.config_ini_section)
     configuration["sqlalchemy.url"] = get_url()
     connectable = engine_from_config(
