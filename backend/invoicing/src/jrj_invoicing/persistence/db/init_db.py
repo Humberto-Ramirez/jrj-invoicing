@@ -1,10 +1,7 @@
-import datetime
 import logging
 
 from jrj_invoicing import schemas
 from jrj_invoicing.persistence import crud
-from jrj_invoicing.persistence.db import base
-from jrj_invoicing.persistence.db.session import engine
 from sqlalchemy.orm import Session
 
 logging.basicConfig(level=logging.INFO)
@@ -25,6 +22,5 @@ def init_db(db: Session) -> None:
             key="001",
             name="Uno",
             price=float(10.5),
-            creation_date=datetime.date(year=2021, month=1, day=1)
         )
         product_db = crud.product.create_defaults(db, obj_in=product_in)

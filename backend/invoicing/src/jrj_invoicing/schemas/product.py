@@ -1,4 +1,3 @@
-import datetime
 from typing import Optional
 
 from pydantic import BaseModel
@@ -20,7 +19,6 @@ class ProductDto(BaseModel):
 
 class ProductEntity(ProductBase):
     id: Optional[int] = None
-    creation_date: Optional[datetime.date] = None
     sw_active: Optional[bool] = False
 
     class Config:
