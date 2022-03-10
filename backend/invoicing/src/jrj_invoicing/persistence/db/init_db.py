@@ -18,7 +18,7 @@ def init_db(db: Session) -> None:
     :param db: Current Session
     """
     # Create the tables if not exists
-    base.Base.metadata.create_all(bind=engine)
+    # base.Base.metadata.create_all(bind=engine)
     product = crud.product.get_by_key(db, key="001")
     if not product:
         product_in = schemas.ProductEntity(
