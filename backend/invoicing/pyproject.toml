@@ -17,6 +17,7 @@ SQLAlchemy = "^1.4.32"
 tenacity = "^8.0.1"
 # postgres dialect
 psycopg2-binary = "^2.9.3"
+alembic = "^1.7.6"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
