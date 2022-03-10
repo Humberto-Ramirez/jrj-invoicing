@@ -7,3 +7,4 @@ class Material(Base, Audit):
     name = Column(String, index=True, nullable=False)
     description = Column(String, nullable=False)
     price = Column(Float)
+    sw_active = Column(Boolean(), default=True)
