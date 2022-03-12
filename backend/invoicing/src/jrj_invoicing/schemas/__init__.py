@@ -1,2 +1,2 @@
 from .product import ProductDto, ProductEntity, ProductUpdate
-from .material import MaterialEntity
+from .material import MaterialEntity, MaterialDto

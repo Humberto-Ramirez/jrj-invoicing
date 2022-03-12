@@ -11,9 +11,13 @@ class MaterialBase(BaseModel):
     price: float
 
 
+class MaterialDto(MaterialBase):
+    sw_active: Optional[bool] = None
+
+
 # Material In properties
 class MaterialEntity(MaterialBase):
-    sw_active: Optional[bool] = False
+    sw_active: Optional[bool] = None
 
     class Config:
         orm_mode = True
