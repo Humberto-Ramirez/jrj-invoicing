@@ -98,3 +98,8 @@ def init_db(db: Session) -> None:
         invoice_in = schemas.InvoiceDto(id=1, sw_active=True, )
         invoice = crud.invoice.create_active(db, obj_in=invoice_in)
 
+    first_invoice = crud.invoice.get(db, id=1)
+    if first_invoice:
+        job_in = schemas.JobDto(id=1, address="414 Stonewall Jackson Dr, Wilmington, NC", invoice_id=1)
+        crud.job.create_active(db, obj_in=job_in)
+
