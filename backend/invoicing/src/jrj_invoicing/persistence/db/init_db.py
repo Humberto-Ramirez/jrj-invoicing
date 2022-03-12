@@ -93,3 +93,8 @@ def init_db(db: Session) -> None:
         material = crud.material.get_by_sku(db, sku=material_in.sku)
         if not material:
             material_db = crud.material.create(db, obj_in=material_in)
+    invoice = crud.invoice.get(db, id=1)
+    if not invoice:
+        invoice_in = schemas.InvoiceDto(id=1, sw_active=True, )
+        invoice = crud.invoice.create_active(db, obj_in=invoice_in)
+
