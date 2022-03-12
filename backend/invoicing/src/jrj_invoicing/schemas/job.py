@@ -12,6 +12,6 @@ class JobDto(JobBase):
     invoice_id: int
 
 
-class JodEntity(JobDto):
+class JobEntity(JobDto):
     class Config:
         orm_mode = True
