@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, Date, Boolean
 from sqlalchemy.orm import relationship
 
 
-class Invoice(Audit, Base):
+class Invoice(Base, Audit):
     id = Column(Integer, primary_key=True, index=True)
     sw_active = Column(Boolean, default=True, nullable=False)
     report_date = Column(Date, nullable=True)
