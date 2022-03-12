@@ -2,6 +2,7 @@ import logging
 
 from jrj_invoicing import schemas
 from jrj_invoicing.persistence import crud
+from jrj_invoicing.persistence.models.material import Material
 from sqlalchemy.orm import Session
 
 logging.basicConfig(level=logging.INFO)
@@ -70,6 +71,21 @@ materials = [
     },
 ]
 
+orders = [
+    {
+        "material_sku": "003",
+        "amount": 23,
+    },
+    {
+        "material_sku": "004",
+        "amount": 30,
+    },
+    {
+        "material_sku": "006",
+        "amount": 2,
+    },
+]
+
 
 def init_db(db: Session) -> None:
     """
@@ -98,8 +114,29 @@ def init_db(db: Session) -> None:
         invoice_in = schemas.InvoiceDto(id=1, sw_active=True, )
         invoice = crud.invoice.create_active(db, obj_in=invoice_in)
 
-    first_invoice = crud.invoice.get(db, id=1)
-    if first_invoice:
+    job = crud.job.get(db, id=1)
+    if not job:
         job_in = schemas.JobDto(id=1, address="414 Stonewall Jackson Dr, Wilmington, NC", invoice_id=1)
-        crud.job.create_active(db, obj_in=job_in)
+        job = crud.job.create_active(db, obj_in=job_in)
 
+    materials_db = crud.material.get_multi(db, skip=0, limit=100)
+    for item in orders:
+        fitem = find_material(item.get("material_sku"), materials_db)
+        item_db = crud.order.get_by_job_sku(db, job=job.id, sku=item.get("material_sku"))
+        if fitem:
+            total = fitem.price * int(item.get("amount"))
+            order_in = schemas.OrderDto(
+                material_sku=fitem.sku,
+                amount=item.get("amount"),
+                total_price=total
+            )
+            if not item_db:
+                order_db = crud.order.create_job_order(db, obj_in=order_in, job=job.id)
+
+
+def find_material(sku, material_list: list[Material]):
+    if material_list:
+        result = list(filter(lambda item: item.sku == sku, material_list))
+        if result:
+            return result[0]
+    return None

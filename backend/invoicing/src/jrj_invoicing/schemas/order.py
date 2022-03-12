@@ -26,6 +26,7 @@ class OrderDto(OrderBase):
 
 class OrderEntity(OrderBase):
     total_price: float
+    job_id: int
 
     class Config:
         orm_mode = True
