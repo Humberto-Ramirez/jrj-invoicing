@@ -1,19 +1,13 @@
-#     id = Column(String, primary_key=True, index=True)
-#     amount = Column(Integer, nullable=False, default=0)
-#     total_price = Column(Float, nullable=False, default=0)
-#     material = relationship("Material", back_populates="order")
-#     material_sku = Column(String, ForeignKey("material.sku"))
-#     job = relationship("Job", back_populates="materials")
-#     job_id = Column(Integer, ForeignKey("job.id"))
-
 from typing import Optional
 
 from pydantic import BaseModel
 
+from .job import JobEntity
+from .material import MaterialEntity
+
 
 # Shared properties
 class OrderBase(BaseModel):
-    material_sku: str
     amount: int
 
 
@@ -26,7 +20,8 @@ class OrderDto(OrderBase):
 
 class OrderEntity(OrderBase):
     total_price: float
-    job_id: int
+    job: JobEntity
+    material: MaterialEntity
 
     class Config:
         orm_mode = True

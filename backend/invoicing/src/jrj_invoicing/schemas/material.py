@@ -15,6 +15,10 @@ class MaterialDto(MaterialBase):
     sw_active: Optional[bool] = None
 
 
+class MaterialDtoOut(MaterialBase):
+    pass
+
+
 # Material In properties
 class MaterialEntity(MaterialBase):
     sw_active: Optional[bool] = None
