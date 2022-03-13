@@ -118,6 +118,10 @@ def init_db(db: Session) -> None:
     if not job:
         job_in = schemas.JobDto(id=1, address="414 Stonewall Jackson Dr, Wilmington, NC", invoice_id=1)
         job = crud.job.create_active(db, obj_in=job_in)
+    second_job = crud.job.get(db, id=2)
+    if not second_job:
+        sec_job_in = schemas.JobDto(id=2, address="3007 West Broad St, Elizabethtown, Wilmington, NC", invoice_id=1)
+        second_job = crud.job.create_active(db, obj_in=sec_job_in)
 
     materials_db = crud.material.get_multi(db, skip=0, limit=100)
     for item in orders:
