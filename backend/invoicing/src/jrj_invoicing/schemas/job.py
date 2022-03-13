@@ -1,5 +1,6 @@
-from typing import Optional
+from typing import Optional, List
 
+from jrj_invoicing.schemas.order import OrderEntity
 from pydantic import BaseModel
 
 
@@ -13,5 +14,7 @@ class JobDto(JobBase):
 
 
 class JobEntity(JobDto):
+    materials: List[OrderEntity] = []
+
     class Config:
         orm_mode = True

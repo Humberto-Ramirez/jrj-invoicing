@@ -2,7 +2,6 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from .job import JobEntity
 from .material import MaterialEntity
 
 
@@ -20,7 +19,6 @@ class OrderDto(OrderBase):
 
 class OrderEntity(OrderBase):
     total_price: float
-    job: JobEntity
     material: MaterialEntity
 
     class Config:
