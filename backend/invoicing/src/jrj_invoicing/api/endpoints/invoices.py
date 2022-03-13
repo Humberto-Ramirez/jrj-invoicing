@@ -9,18 +9,18 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-@router.get("/", response_model=List[schemas.MaterialEntity])
-def read_materials(
+@router.get("/", response_model=List[schemas.InvoiceEntity])
+def read_invoices(
         db: Session = Depends(deps.get_db),
         offset: int = 0,
         limit: int = 100
 ) -> Any:
     """
-    Retrieve materials
+    Retrieve invoices
     :param db:
     :param offset:
     :param limit:
     :return:
     """
-    materials = crud.material.get_multi(db, skip=offset, limit=limit)
-    return materials
+    invoices = crud.invoice.get_multi(db, skip=offset, limit=limit)
+    return invoices
