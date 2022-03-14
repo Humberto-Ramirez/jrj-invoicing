@@ -11,11 +11,10 @@ class JobBase(BaseModel):
 class JobDto(BaseModel):
     address: str
     invoice_id: int
-    materials: List[OrderEntity] = []
 
 
-class JobEntity(JobDto):
-    # materials: List[OrderEntity] = []
+class JobEntity(JobDto, JobBase):
+    orders: List[OrderEntity] = []
 
     class Config:
         orm_mode = True
