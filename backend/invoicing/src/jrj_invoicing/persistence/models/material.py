@@ -22,5 +22,5 @@ class Order(Base, Audit):
     total_price = Column(Float, nullable=False, default=0)
     material = relationship("Material", back_populates="order")
     material_sku = Column(String, ForeignKey("material.sku"), primary_key=True)
-    job = relationship("Job", back_populates="materials")
+    job = relationship("Job", back_populates="orders")
     job_id = Column(Integer, ForeignKey("job.id"), primary_key=True)
