@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-@router.get("/", response_model=List[schemas.InvoiceEntity])
+@router.get("/", response_model=List[schemas.InvoiceEntityOut])
 def read_invoices(
         db: Session = Depends(deps.get_db),
         offset: int = 0,
@@ -38,5 +38,5 @@ def create_invoice(
     :param invoice:
     :return:
     """
-    invoice_db = crud.invoice.create(db, obj_in=invoice)
+    invoice_db = crud.invoice.create_active(db, obj_in=invoice)
     return invoice_db
