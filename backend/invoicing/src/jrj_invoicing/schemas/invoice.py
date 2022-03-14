@@ -11,8 +11,11 @@ class InvoiceBase(BaseModel):
 
 class InvoiceDto(BaseModel):
     sw_active: Optional[bool] = None
-    report_date: Optional[datetime.date] = datetime.date.today()
     jobs: List[JobEntity] = []
+
+
+class InvoiceUpdate(InvoiceDto):
+    report_date: Optional[datetime.date] = datetime.date.today()
 
 
 class InvoiceEntity(InvoiceBase):
@@ -20,3 +23,7 @@ class InvoiceEntity(InvoiceBase):
 
     class Config:
         orm_mode = True
+
+
+class InvoiceEntityOut(InvoiceEntity):
+    report_date: Optional[datetime.date] = None
