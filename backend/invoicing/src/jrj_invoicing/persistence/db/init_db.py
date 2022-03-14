@@ -76,14 +76,17 @@ orders = [
     {
         "material_sku": "003",
         "amount": 23,
+        "job": 1
     },
     {
         "material_sku": "004",
         "amount": 30,
+        "job": 2
     },
     {
         "material_sku": "006",
         "amount": 2,
+        "job": 1
     },
 ]
 
@@ -126,17 +129,20 @@ def init_db(db: Session) -> None:
 
     materials_db = crud.material.get_multi(db, skip=0, limit=100)
     for item in orders:
-        fitem = find_material(item.get("material_sku"), materials_db)
-        item_db = crud.order.get_by_job_sku(db, job=job.id, sku=item.get("material_sku"))
-        if fitem:
-            total = fitem.price * int(item.get("amount"))
-            order_in = schemas.OrderDto(
-                material_sku=fitem.sku,
-                amount=item.get("amount"),
-                total_price=total
-            )
-            if not item_db:
-                order_db = crud.order.create_job_order(db, obj_in=order_in, job=job.id)
+        material_db = find_material(item.get("material_sku"), materials_db)
+        if material_db:
+            order_db = crud.order.get_by_job_sku(db, job=item.get("job"), sku=material_db.sku)
+            if order_db:
+                logger.info(f"Already Exists!:{material_db.sku}-{order_db.job_id}")
+            else:
+                total = material_db.price * int(item.get("amount"))
+                logger.info(f"Order total price: {total}")
+                order_in = schemas.OrderDto(
+                    material_sku=material_db.sku,
+                    amount=item.get("amount"),
+                    total_price=total,
+                )
+                order_db = crud.order.create_job_order(db, obj_in=order_in, job=item.get("job"))
 
 
 def find_material(sku, material_list: list[Material]):
