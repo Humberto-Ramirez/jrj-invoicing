@@ -10,7 +10,7 @@ class CRUDInvoice(CRUDBase[Invoice, InvoiceEntity, InvoiceEntity]):
 
     def create_active(self, db: Session, *, obj_in: InvoiceEntity):
         obj_ind_data = jsonable_encoder(obj_in)
-        db_obj = self.model(**obj_ind_data, sw_active=True)  # type: ignore
+        db_obj = self.model(**obj_ind_data)  # type: ignore
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)

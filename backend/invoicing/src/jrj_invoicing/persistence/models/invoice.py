@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 
 
 class Invoice(Base, Audit):
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     sw_active = Column(Boolean, default=True, nullable=False)
     report_date = Column(Date, nullable=True)
     jobs = relationship("Job", back_populates="invoice")

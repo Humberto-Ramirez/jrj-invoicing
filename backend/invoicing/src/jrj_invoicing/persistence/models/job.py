@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 
 class Job(Audit, Base):
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     address = Column(String, nullable=False)
     materials = relationship("Order", back_populates="job")
     invoice = relationship("Invoice", back_populates="jobs")
