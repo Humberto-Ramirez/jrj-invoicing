@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 from jrj_invoicing import schemas
@@ -111,7 +112,7 @@ def init_db(db: Session) -> None:
             material_db = crud.material.create(db, obj_in=material_in)
     invoice = crud.invoice.get(db, id=1)
     if not invoice:
-        invoice_in = schemas.InvoiceDto(id=1, sw_active=True, )
+        invoice_in = schemas.InvoiceDto(sw_active=True, report_date=datetime.date.today(), )
         invoice = crud.invoice.create_active(db, obj_in=invoice_in)
 
     job = crud.job.get(db, id=1)
