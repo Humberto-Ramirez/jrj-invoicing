@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends
 from jrj_invoicing import schemas
 from jrj_invoicing.api import deps
 from jrj_invoicing.persistence import crud
-from sqlalchemy.orm import Session
 from loguru import logger
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -27,12 +27,12 @@ def read_orders(
     return orders
 
 
-@router.post("/", response_model=List[schemas.OrderEntity])
+@router.post("/{job_id}", response_model=List[schemas.OrderEntity])
 def create_orders(
         db: Session = Depends(deps.get_db),
         *,
-        orders: List[schemas.OrderDto],
         job_id: int,
+        orders: List[schemas.OrderDto],
 ) -> Any:
     """
     Create orders
