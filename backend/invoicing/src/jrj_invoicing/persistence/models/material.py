@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from jrj_invoicing.persistence.db.base_class import Audit, Base
-from sqlalchemy import Column, String, Float, Boolean, ForeignKey, Integer
+from sqlalchemy import Column, String, Float, Boolean, ForeignKey, Integer, UniqueConstraint
 from sqlalchemy.orm import relationship
 
 if TYPE_CHECKING:
@@ -18,6 +18,9 @@ class Material(Base, Audit):
 
 
 class Order(Base, Audit):
+    __table_args__ = (
+        UniqueConstraint('material_sku', 'job_id', name='unique_order_job_material'),
+    )
     amount = Column(Integer, nullable=False, default=0)
     total_price = Column(Float, nullable=False, default=0)
     material = relationship("Material", back_populates="order")
