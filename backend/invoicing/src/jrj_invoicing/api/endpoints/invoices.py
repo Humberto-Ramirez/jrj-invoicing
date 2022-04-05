@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 from jrj_invoicing import schemas
 from jrj_invoicing.api import deps
 from jrj_invoicing.persistence import crud
-from jrj_invoicing.utils.Reporting import Reporting
+from jrj_invoicing.services.invoice_report.generate_invoice_report import generate_report
 from sqlalchemy.orm import Session
 from starlette.responses import FileResponse
 
@@ -56,5 +56,4 @@ async def create_report(
     :param invoice_id: Invoice id
     :return: PDF File
     """
-    reports = Reporting()
-    return FileResponse(await reports.create_invoice_report(invoice_id))
+    return FileResponse(await generate_report(db, invoice_id))
