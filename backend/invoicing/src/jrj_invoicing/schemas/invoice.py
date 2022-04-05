@@ -2,7 +2,7 @@ import datetime
 from typing import Optional, List
 
 from pydantic import BaseModel
-from .job import JobEntity
+from .job import JobEntity, JobEntityOut
 
 
 class InvoiceBase(BaseModel):
@@ -26,4 +26,5 @@ class InvoiceEntity(InvoiceBase):
 
 
 class InvoiceEntityOut(InvoiceEntity):
+    jobs: List[JobEntity] = []
     report_date: Optional[datetime.date] = None

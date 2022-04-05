@@ -18,3 +18,8 @@ class JobEntity(JobDto, JobBase):
 
     class Config:
         orm_mode = True
+
+
+class JobEntityOut(JobEntity):
+    class Config:
+        orm_mode = False
