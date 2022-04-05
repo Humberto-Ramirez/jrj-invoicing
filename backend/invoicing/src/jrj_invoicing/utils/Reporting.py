@@ -1,6 +1,8 @@
 import os
+from typing import List
 
 from jrj_invoicing.core.config import settings
+from jrj_invoicing.schemas import JobEntityOut
 from jrj_invoicing.utils.PDF import PDF
 
 
@@ -16,18 +18,19 @@ def is_odd(no_row: int) -> int:
 
 class Reporting:
 
-    async def create_invoice_report(self, invoice_id: int) -> str:
+    async def create_invoice_report(self, invoice_id: int, jobs: List[JobEntityOut]) -> str:
         path = f'{settings.REPORTS_DIR}/invoice_{invoice_id}.pdf'
         pdf = PDF()
         # pdf.add_page()
         pdf.set_title("JRJ-INVOICING!")
         pdf.print_header(str(invoice_id))
-        # Table Header
-        self.create_table_block(pdf, 0)
-        self.create_table_block(pdf, 1)
-        self.create_table_block(pdf, 0)
-        self.create_table_block(pdf, 1)
-        self.create_table_block(pdf, 0)
+
+        counter = 0
+        jobs_render: List[JobEntityOut] = jobs
+        for job in jobs_render:
+            self.create_table_block(pdf, counter, job.address)
+            counter = counter + 1
+
         pdf.ln(10)
         # two blank lines
         pdf.cell(0, 6, '', 0, 1, 'C', 1)
@@ -42,15 +45,28 @@ class Reporting:
         return path
 
     @staticmethod
-    def create_table_block(pdf, first_row: int):
+    def create_table_block(pdf, first_row: int, address: str):
         fill_row = is_odd(first_row)
         # Table Header
         pdf.set_text_color(42, 57, 144)
         pdf.set_font('Arial', 'B', 11.5)
-        pdf.cell(69.5, 6, 'Address:', 0, 0, 'L', fill_row)
-        pdf.cell(21.5, 6, 'Amount', 0, 0, 'R', fill_row)
-        pdf.cell(28, 6, 'Unit price', 0, 0, 'R', fill_row)
-        pdf.cell(28, 6, 'Total price', 0, 1, 'R', fill_row)
+        address_cells = pdf.multi_cell(
+            69.5,
+            f'{address}',
+            split_only=True
+        )
+        if len(address_cells) > 1:  # for multiline address
+            pdf.cell(69.5, 6, f'Address: {address_cells[0]}', 0, 0, 'C', fill_row)
+        else:
+            pdf.cell(69.5, 6, f'Address: {address}', 0, 0, 'C', fill_row)
+        pdf.cell(21.5, 6, 'Amount\n', border=0, align='R', fill=fill_row)
+        pdf.cell(28, 6, 'Unit price\n', border=0, align='R', fill=fill_row)
+        pdf.cell(28, 6, 'Total price\n', border=0, align='R', fill=fill_row, ln=1)
+
+        # If address is multiline
+        if len(address_cells) > 1:
+            pdf.cell(69.5, 6, f'{address_cells[1]}', border=0, align='C', fill=fill_row)
+            pdf.cell(77.5, 6, '', border=0, align='C', fill=fill_row, ln=1)
 
         # SKU 001
         pdf.set_font('Arial', size=10)
