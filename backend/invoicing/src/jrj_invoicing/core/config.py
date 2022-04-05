@@ -5,6 +5,7 @@ from pydantic import BaseSettings, PostgresDsn, validator
 
 class Settings(BaseSettings):
     API_V_STR: str = "/api/v1"
+    REPORTS_DIR: str = "/tmp/reports"
 
     # Postgress DB Connection
     POSTGRES_SERVER: str
